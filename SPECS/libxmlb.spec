@@ -2,11 +2,11 @@
 
 Summary:   Library for querying compressed XML metadata
 Name:      libxmlb
-Version:   0.3.10
+Version:   0.3.24
 Release:   1%{?dist}
 License:   LGPLv2+
 URL:       https://github.com/hughsie/libxmlb
-Source0:   http://people.freedesktop.org/~hughsient/releases/%{name}-%{version}.tar.xz
+Source0:   https://github.com/hughsie/libxmlb/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk-doc
@@ -14,6 +14,7 @@ BuildRequires: libstemmer-devel
 BuildRequires: meson
 BuildRequires: gobject-introspection-devel
 BuildRequires: xz-devel
+BuildRequires: libzstd-devel
 BuildRequires: python3-setuptools
 
 # needed for the self tests
@@ -84,11 +85,22 @@ Executable and data files for installed tests.
 %files tests
 %dir %{_libexecdir}/installed-tests/libxmlb
 %{_libexecdir}/installed-tests/libxmlb/xb-self-test
+%{_libexecdir}/installed-tests/libxmlb/test.desktop
+%{_libexecdir}/installed-tests/libxmlb/test.quirk
+%{_libexecdir}/installed-tests/libxmlb/test.xml
+%{_libexecdir}/installed-tests/libxmlb/test.xml.xz
+%{_libexecdir}/installed-tests/libxmlb/test.xml.zst
 %{_libexecdir}/installed-tests/libxmlb/test.xml.gz.gz.gz
 %dir %{_datadir}/installed-tests/libxmlb
 %{_datadir}/installed-tests/libxmlb/libxmlb.test
 
 %changelog
+* Fri Sep 26 2025 RHEL Packaging Agent <jotnar@redhat.com> - 0.3.24-1
+- Rebase to 0.3.24
+- Add missing libzstd-devel BuildRequires
+- Add missing files to the %files tests section
+- Resolves: RHEL-116442
+
 * Fri Oct 14 2022 Neal Gompa <ngompa@centosproject.org> - 0.3.10-1
 - New upstream release
 - Fix dumping and exporting multiple files from the CLI
