@@ -1,0 +1,61 @@
+From 5bff57760c64fe4eec55369d310de1ac6c9c4025 Mon Sep 17 00:00:00 2001
+From: Richard Hughes <richard@hughsie.com>
+Date: Fri, 29 May 2026 11:15:43 +0100
+Subject: [PATCH] Revert the soname for RHEL-8
+
+This was bumped in 52f64aa8bbf785244a7f3a2b3881e265c01eff82 just in case that
+any external programs were using removed internal (but exported) symbols.
+
+Nothing in RHEL-8 actually uses these, so it is safe to use the old soname.
+---
+ meson.build     | 2 +-
+ src/meson.build | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 751e9e0..48c6445 100644
+--- a/meson.build
++++ b/meson.build
+@@ -18,7 +18,7 @@ conf.set('XMLB_MICRO_VERSION', libxmlb_micro_version)
+ conf.set_quoted('PACKAGE_VERSION', libxmlb_version)
+ 
+ # libtool versioning - this applies to libxmlb
+-lt_current = '2'
++lt_current = '1'
+ lt_revision = '0'
+ lt_age = '0'
+ lt_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
+diff --git a/src/meson.build b/src/meson.build
+index 3dc6b4e..89330be 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -6,7 +6,7 @@ libxmlb_version_h = configure_file(
+ 
+ install_headers(
+   'xmlb.h',
+-  subdir : 'libxmlb-2',
++  subdir : 'libxmlb-@0@'.format(lt_current),
+ )
+ 
+ xb_headers = files(
+@@ -34,7 +34,7 @@ xb_headers = files(
+ 
+ install_headers(
+   xb_headers,
+-  subdir : 'libxmlb-2/libxmlb',
++  subdir : 'libxmlb-@0@/libxmlb'.format(lt_current),
+ )
+ 
+ subdir('libxmlb')
+@@ -139,7 +139,7 @@ endif
+ pkgg = import('pkgconfig')
+ pkgg.generate(libxmlb,
+   requires : [ 'gio-2.0' ],
+-  subdirs : 'libxmlb-2',
++  subdirs : 'libxmlb-@0@'.format(lt_current),
+   version : meson.project_version(),
+   name : 'libxmlb',
+   filebase : 'xmlb',
+-- 
+2.54.0
+
