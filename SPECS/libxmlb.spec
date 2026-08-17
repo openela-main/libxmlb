@@ -3,7 +3,7 @@
 Summary:   Library for querying compressed XML metadata
 Name:      libxmlb
 Version:   0.3.28
-Release:   1%{?dist}
+Release:   2%{?dist}
 License:   LGPLv2+
 URL:       https://github.com/hughsie/%{name}
 Source0:   https://github.com/hughsie/%{name}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -97,6 +97,10 @@ Executable and data files for installed tests.
 %{_datadir}/installed-tests/libxmlb/libxmlb.test
 
 %changelog
+* Thu Aug 13 2026 Tomas Pelka <tpelka@redhat.com> 0.3.28-2
+- Release bump to solve repo content
+- Resolves: RHEL-240154
+
 * Thu Jul 02 2026 Richard Hughes <rhughes@redhat.com> 0.3.28-1
 - New upstream release for fwupd backport
 - Resolves: RHEL-190658
