@@ -2,11 +2,11 @@
 
 Summary:   Library for querying compressed XML metadata
 Name:      libxmlb
-Version:   0.3.24
+Version:   0.3.28
 Release:   1%{?dist}
-License:   LGPLv2+
-URL:       https://github.com/hughsie/libxmlb
-Source0:   https://github.com/hughsie/libxmlb/releases/download/%{version}/%{name}-%{version}.tar.xz
+License:   LGPL-2.1-or-later
+URL:       https://github.com/hughsie/%{name}
+Source0:   https://github.com/hughsie/%{name}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk-doc
@@ -42,12 +42,13 @@ Files for development with %{name}.
 
 %package tests
 Summary: Files for installed tests
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description tests
 Executable and data files for installed tests.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 
@@ -85,16 +86,15 @@ Executable and data files for installed tests.
 %files tests
 %dir %{_libexecdir}/installed-tests/libxmlb
 %{_libexecdir}/installed-tests/libxmlb/xb-self-test
-%{_libexecdir}/installed-tests/libxmlb/test.desktop
-%{_libexecdir}/installed-tests/libxmlb/test.quirk
-%{_libexecdir}/installed-tests/libxmlb/test.xml
-%{_libexecdir}/installed-tests/libxmlb/test.xml.xz
-%{_libexecdir}/installed-tests/libxmlb/test.xml.zst
-%{_libexecdir}/installed-tests/libxmlb/test.xml.gz.gz.gz
+%{_libexecdir}/installed-tests/libxmlb/test.*
 %dir %{_datadir}/installed-tests/libxmlb
 %{_datadir}/installed-tests/libxmlb/libxmlb.test
 
 %changelog
+* Thu Jul 02 2026 Richard Hughes <rhughes@redhat.com> 0.3.28-1
+- New upstream release
+- Resolves: RHEL-190661
+
 * Fri Sep 26 2025 RHEL Packaging Agent <jotnar@redhat.com> - 0.3.24-1
 - Rebase to 0.3.24
 - Add missing libzstd-devel BuildRequires
